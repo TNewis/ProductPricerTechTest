@@ -4,8 +4,8 @@ namespace ProductPricerTechTestAPI.Services
 {
     public interface IProductData
     {
-        List<Product> GetProducts();
+        Task<List<Product>> GetProductsAsync();
         Product? UpdatePrice(Guid productGuid, decimal price);
-        Product AddProduct(string productName, decimal price);
+        Task<Product> AddProductAsync(string productName, decimal price);
     }
 }

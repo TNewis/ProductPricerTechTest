@@ -20,9 +20,9 @@ namespace ProductPricerTechTestAPI.Controllers
         }
 
         [HttpGet(Name = "GetProducts")]
-        public IEnumerable<Product> Get()
+        public async Task<IEnumerable<Product>> GetAsync()
         {
-            return _productData.GetProducts();
+            return await _productData.GetProductsAsync();
         }
 
         [HttpPut(Name = "EditProductPrice")]
@@ -32,9 +32,9 @@ namespace ProductPricerTechTestAPI.Controllers
         }
 
         [HttpPost(Name = "AddProduct")]
-        public Product Post(AddProductRequest request)
+        public async Task<Product> PostAsync(AddProductRequest request)
         {
-            return _productData.AddProduct(request.ProductName, request.Price);
+            return await _productData.AddProductAsync(request.ProductName, request.Price);
         }
     }
 }

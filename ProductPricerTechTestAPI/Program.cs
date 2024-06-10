@@ -1,4 +1,5 @@
 using ProductPricerTechTestAPI.Services;
+using ProductPricerTechTestAPI.Services.CurrencyConversionService;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -24,6 +25,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductData, ProductData>();
+builder.Services.AddScoped<ICurrencyConversionService, OpenExchangeCurrencyConversionService>();
 
 var app = builder.Build();
 

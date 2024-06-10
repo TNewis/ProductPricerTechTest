@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
+using ProductPricerTechTestAPI.Controllers;
 using ProductPricerTechTestAPI.Models;
+using ProductPricerTechTestAPI.Services.CurrencyConversionService;
 using System.Configuration;
 using System.Reflection.Metadata.Ecma335;
 
@@ -15,8 +17,16 @@ namespace ProductPricerTechTestAPI.Services
 
         private ProductDBContext _dbContext = new();
 
+        private ICurrencyConversionService _currencyConversionService;
+        private ILogger _logger;
 
-        public Product AddProduct(string productName, decimal price)
+        public ProductData(ILogger<ProductData> logger, ICurrencyConversionService currencyConversionService)
+        {
+            _logger = logger;
+            _currencyConversionService = currencyConversionService;
+        }
+
+        public async Task<Product> AddProductAsync(string productName, decimal price)
         {
             Product newProduct = new();
 
@@ -36,7 +46,7 @@ namespace ProductPricerTechTestAPI.Services
                 while (reader.Read()) 
                 {
                     newProduct.Name = reader["Name"].ToString();
-                    newProduct.Price = Convert.ToDecimal(reader["Price"]);
+                    newProduct.Price = await _currencyConversionService.ConvertCurrency(Convert.ToDecimal(reader["Price"]),"USD","GBP");
                     newProduct.Guid = Guid.Parse(reader["Guid"].ToString());                 
                 }
             }
@@ -44,13 +54,19 @@ namespace ProductPricerTechTestAPI.Services
             return newProduct;
         }
 
-        public List<Product> GetProducts()
+        public async Task<List<Product>> GetProductsAsync()
         {
             var productEntities= _dbContext.Product.ToList();
             var products = new List<Product>();
             foreach (var productEntity in productEntities)
             {
-                products.Add(productEntity.ToProduct());
+                var product = productEntity.ToProduct();
+
+                product.Price= await _currencyConversionService.ConvertCurrency(product.Price, "GBP", "USD");
+                product.Currency = "USD";
+
+                products.Add(product);
+
             }
 
             return products;
