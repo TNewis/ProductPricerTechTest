@@ -1,51 +1,57 @@
 <p *ngIf="!products?.length"><em>Loading...</em></p>
 
-<div id="divAddProduct" *ngIf="!editingProduct">
-  <form>
-    <label>New Product Name:</label>
-    <input type="text" [(ngModel)]="textAreaProductName" name="textAreaName">
-    <br/>
-    <label>New Product Price:</label>
+<div *ngIf="products.length">
+  <div id="divAddProduct" *ngIf="!editingProduct">
+    <h1>Add New Product</h1>
+    <form>
+      <label>New Product Name:</label>
+      <input type="text" [(ngModel)]="textAreaProductName" name="textAreaName">
+      <br />
+      <label>New Product Price:</label>
+      <input type="text" (keypress)="numericOnly($event)" [(ngModel)]="textAreaProductPrice" name="textAreaPrice">
+      <button (click)='addProduct()'>
+        Add
+      </button>
+    </form>
+  </div>
+  <div id="divEditProduct" *ngIf="editingProduct">
+    <h1>Edit Product</h1>
+    <label>Editing Product: </label>
+    <label>{{selectedProduct?.name}}</label>
+    <br />
+    <label>New Price:</label>
     <input type="text" (keypress)="numericOnly($event)" [(ngModel)]="textAreaProductPrice" name="textAreaPrice">
-    <button (click)='addProduct()'>
-      Add
+    <button (click)='editProduct()'>
+      Confirm
     </button>
-  </form>
+    <button (click)='hideEdit()'>
+      Cancel
+    </button>
+  </div>
+
+
+  <h1>Products</h1>
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Currency Code</th>
+        <th>Guid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.currency }}</td>
+        <td>{{ product.guid }}</td>
+        <td>
+          <button (click)='selectProduct(product)'>
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div id="divEditProduct" *ngIf="editingProduct">
-  <label>Editing Product: </label>
-  <label>{{selectedProduct?.name}}</label>
-  <br />
-  <label>New Price:</label>
-  <input type="text" (keypress)="numericOnly($event)" [(ngModel)]="textAreaProductPrice" name="textAreaPrice">
-  <button (click)='editProduct()'>
-    Confirm
-  </button>
-  <button (click)='hideEdit()'>
-    Cancel
-  </button>
-</div>
-
-
-
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="products.length">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Guid</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let product of products">
-      <td>{{ product.name }}</td>
-      <td>{{ product.price }}</td>
-      <td>{{ product.guid }}</td>
-      <td>
-        <button (click)='selectProduct(product)'>
-          Edit
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>

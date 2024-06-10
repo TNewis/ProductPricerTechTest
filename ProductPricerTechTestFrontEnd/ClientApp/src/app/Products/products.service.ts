@@ -42,6 +42,7 @@ export class ProductsService {
 export interface Product {
   name: string;
   price: number;
+  currency: string;
   guid: string;
 }
 
