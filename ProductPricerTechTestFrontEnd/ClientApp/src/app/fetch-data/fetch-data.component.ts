@@ -37,6 +37,8 @@ export class FetchDataComponent {
       productGuid: this.selectedProduct?.guid ?? '',
       price: +this.textAreaProductPrice
     };
+
+    this.products = this.products.filter(p => p.guid != this.selectedProduct?.guid);
     this.productsService.editProduct(editProduct).subscribe(product => this.products.push(product));
   }
 

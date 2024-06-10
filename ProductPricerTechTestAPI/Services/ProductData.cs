@@ -2,6 +2,7 @@
 using ProductPricerTechTestAPI.Controllers;
 using ProductPricerTechTestAPI.Models;
 using ProductPricerTechTestAPI.Services.CurrencyConversionService;
+using Swashbuckle.AspNetCore.Swagger;
 using System.Configuration;
 using System.Reflection.Metadata.Ecma335;
 
@@ -39,7 +40,7 @@ namespace ProductPricerTechTestAPI.Services
             SqlCommand command = new SqlCommand(StoredProcedureAddNewProduct, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter(AddNewProductProductName, productName));
-            command.Parameters.Add(new SqlParameter(AddNewProductPrice, price));
+            command.Parameters.Add(new SqlParameter(AddNewProductPrice, await _currencyConversionService.ConvertCurrency(Convert.ToDecimal(price), "USD", "GBP")));
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -72,16 +73,19 @@ namespace ProductPricerTechTestAPI.Services
             return products;
         }
 
-        public Product UpdatePrice(Guid productGuid, decimal price)
+        public async Task<Product> UpdatePriceAsync(Guid productGuid, decimal price)
         {
             var product = _dbContext.Product.SingleOrDefault(p => p.Guid == productGuid);
 
             if (product != null) 
             { 
-                product.Price = price;
+                product.Price = await _currencyConversionService.ConvertCurrency(Convert.ToDecimal(price), "USD", "GBP");
                 _dbContext.SaveChanges();
 
-                return product.ToProduct();
+                var newProduct = product.ToProduct();
+                newProduct.Price = await _currencyConversionService.ConvertCurrency(Convert.ToDecimal(price), "GBP", "USD");
+                newProduct.Currency = "USD";
+                return newProduct;
             }
 
             _logger.LogError("Guid " + productGuid + " does not exist in database.");
