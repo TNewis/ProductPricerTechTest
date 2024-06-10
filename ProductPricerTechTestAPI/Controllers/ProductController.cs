@@ -28,12 +28,22 @@ namespace ProductPricerTechTestAPI.Controllers
         [HttpPut(Name = "EditProductPrice")]
         public Product Put(EditProductPriceRequest request)
         {
+            if (request.Price < 0.00m)
+            {
+                _logger.LogError("Bad EditProductPriceRequest: Price negative");
+                throw new System.Web.Http.HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
+            }
             return _productData.UpdatePrice(request.ProductGuid, request.Price);
         }
 
         [HttpPost(Name = "AddProduct")]
         public async Task<Product> PostAsync(AddProductRequest request)
         {
+            if (request.Price < 0.00m)
+            {
+                _logger.LogError("Bad AddProductRequest: Price negative");
+                throw new System.Web.Http.HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest));
+            }
             return await _productData.AddProductAsync(request.ProductName, request.Price);
         }
     }

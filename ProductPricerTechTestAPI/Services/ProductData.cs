@@ -72,7 +72,7 @@ namespace ProductPricerTechTestAPI.Services
             return products;
         }
 
-        public Product? UpdatePrice(Guid productGuid, decimal price)
+        public Product UpdatePrice(Guid productGuid, decimal price)
         {
             var product = _dbContext.Product.SingleOrDefault(p => p.Guid == productGuid);
 
@@ -84,7 +84,8 @@ namespace ProductPricerTechTestAPI.Services
                 return product.ToProduct();
             }
 
-            return null;
+            _logger.LogError("Guid " + productGuid + " does not exist in database.");
+            throw new KeyNotFoundException("Guid " + productGuid + " does not exist in database.");
         }
     }
 }
