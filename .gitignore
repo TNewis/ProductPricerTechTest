@@ -1,2 +1,5 @@
 
 /.vs
+/ProductPricerTechTestAPI/bin
+/ProductPricerTechTestAPI/obj
+/ProductPricerTechTestFrontEnd/ClientApp/.angular/cache

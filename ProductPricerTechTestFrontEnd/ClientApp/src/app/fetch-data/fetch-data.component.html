@@ -1,0 +1,51 @@
+<p *ngIf="!products?.length"><em>Loading...</em></p>
+
+<div id="divAddProduct" *ngIf="!editingProduct">
+  <form>
+    <label>New Product Name:</label>
+    <input type="text" [(ngModel)]="textAreaProductName" name="textAreaName">
+    <br/>
+    <label>New Product Price:</label>
+    <input type="text" (keypress)="numericOnly($event)" [(ngModel)]="textAreaProductPrice" name="textAreaPrice">
+    <button (click)='addProduct()'>
+      Add
+    </button>
+  </form>
+</div>
+<div id="divEditProduct" *ngIf="editingProduct">
+  <label>Editing Product: </label>
+  <label>{{selectedProduct?.name}}</label>
+  <br />
+  <label>New Price:</label>
+  <input type="text" (keypress)="numericOnly($event)" [(ngModel)]="textAreaProductPrice" name="textAreaPrice">
+  <button (click)='editProduct()'>
+    Confirm
+  </button>
+  <button (click)='hideEdit()'>
+    Cancel
+  </button>
+</div>
+
+
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="products.length">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Guid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.guid }}</td>
+      <td>
+        <button (click)='selectProduct(product)'>
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

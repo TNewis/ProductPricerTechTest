@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductPricerTechTestAPI", "ProductPricerTechTestAPI\ProductPricerTechTestAPI.csproj", "{49887359-DB97-42D2-8C6A-D5D6BF9A6174}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductPricerTechTestAPI", "ProductPricerTechTestAPI\ProductPricerTechTestAPI.csproj", "{49887359-DB97-42D2-8C6A-D5D6BF9A6174}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductPricerTechTestFrontEnd", "ProductPricerTechTestFrontEnd\ProductPricerTechTestFrontEnd.csproj", "{9DA6F41B-2191-4884-B688-E607F69D512B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{49887359-DB97-42D2-8C6A-D5D6BF9A6174}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49887359-DB97-42D2-8C6A-D5D6BF9A6174}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49887359-DB97-42D2-8C6A-D5D6BF9A6174}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA6F41B-2191-4884-B688-E607F69D512B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA6F41B-2191-4884-B688-E607F69D512B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA6F41B-2191-4884-B688-E607F69D512B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA6F41B-2191-4884-B688-E607F69D512B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

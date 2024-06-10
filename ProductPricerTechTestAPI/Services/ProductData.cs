@@ -7,7 +7,7 @@ namespace ProductPricerTechTestAPI.Services
 {
     public class ProductData : IProductData
     {
-        private const string DefaultConnection = "DefaultConnection";
+        private const string ProductDbConnectionString = "ProductDBContext";
 
         private const string StoredProcedureAddNewProduct = "AddNewProduct";
         private const string AddNewProductProductName = "@ProductName";
@@ -21,7 +21,7 @@ namespace ProductPricerTechTestAPI.Services
             Product newProduct = new();
 
             SqlConnection connection;
-            var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[DefaultConnection].ConnectionString;
+            var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[ProductDbConnectionString].ConnectionString;
 
             connection = new SqlConnection(connectionString);
             connection.Open();
